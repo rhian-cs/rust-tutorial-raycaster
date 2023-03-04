@@ -16,11 +16,19 @@ fn phandler(_: &PanicInfo<'_>) -> ! {
 // These values are stored at specific address, so we'll be using hardcoded pointers.
 const DRAW_COLORS: *mut u16 = 0x14 as *mut u16;
 const GAMEPAD1: *const u8 = 0x16 as *const u8;
+const MOUSE_X: *const u16 = 0x1a as *const u16;
+const MOUSE_BUTTONS: *const u8 = 0x1e as *const u8;
 
+const BUTTON_X: u8 = 0b00000001;
+const BUTTON_Z: u8 = 0b00000010;
+// Bit 2 is unused
+// Bit 3 is unused
 const BUTTON_LEFT: u8 = 0b00010000;
 const BUTTON_RIGHT: u8 = 0b00100000;
 const BUTTON_UP: u8 = 0b01000000;
 const BUTTON_DOWN: u8 = 0b10000000;
+
+const MOUSE_BUTTON_LEFT: u8 = 0b00000001;
 
 const MAP: [u16; 8] = [
     0b1111111111111111,
@@ -39,21 +47,36 @@ const ANGLE_STEP: f32 = FOV / 160.0; // The angle between each ray.
 const WALL_HEIGHT: f32 = 100.0; // A magic number.
 
 const STEP_SIZE: f32 = 0.045;
+const MOUSE_FACTOR: f32 = 0.01;
 
 struct State {
     player_x: f32,
     player_y: f32,
     player_angle: f32,
+    mouse_x: u16,
+    mouse_left: bool,
 }
 
 static mut STATE: State = State {
     player_x: 1.5,
     player_y: 1.5,
     player_angle: 0.0,
+    mouse_x: 0,
+    mouse_left: false,
 };
 
 impl State {
-    pub fn update(&mut self, up: bool, down: bool, left: bool, right: bool) {
+    pub fn update(
+        &mut self,
+        up: bool,
+        down: bool,
+        left: bool,
+        right: bool,
+        mouse_left: bool,
+        mouse_x: u16,
+        button_x: bool,
+        button_z: bool,
+    ) {
         let previous_position = (self.player_x, self.player_y);
 
         if up {
@@ -66,12 +89,35 @@ impl State {
             self.player_y -= -sinf(self.player_angle) * STEP_SIZE;
         }
 
-        if left {
-            self.player_angle += STEP_SIZE;
+        if right {
+            self.player_x += sinf(self.player_angle) * STEP_SIZE;
+            self.player_y += cosf(self.player_angle) * STEP_SIZE;
         }
 
-        if right {
+        if left {
+            self.player_x -= sinf(self.player_angle) * STEP_SIZE / 2.0;
+            self.player_y -= cosf(self.player_angle) * STEP_SIZE / 2.0;
+        }
+
+        if (!self.mouse_left && mouse_left) {
+            self.mouse_x = mouse_x;
+        }
+
+        if mouse_left {
+            let mouse_x_diff: i32 = mouse_x as i32 - self.mouse_x as i32;
+            self.mouse_x = mouse_x;
+
+            self.player_angle += (mouse_x_diff as f32 * MOUSE_FACTOR) % (PI * 2.0);
+        }
+
+        self.mouse_left = mouse_left;
+
+        if button_z {
             self.player_angle -= STEP_SIZE;
+        }
+
+        if button_x {
+            self.player_angle += STEP_SIZE;
         }
 
         // if moving us on this frame put us into a wall just revert it
@@ -241,6 +287,10 @@ unsafe fn update() {
         *GAMEPAD1 & BUTTON_DOWN != 0,
         *GAMEPAD1 & BUTTON_LEFT != 0,
         *GAMEPAD1 & BUTTON_RIGHT != 0,
+        *MOUSE_BUTTONS & MOUSE_BUTTON_LEFT != 0,
+        *MOUSE_X,
+        *GAMEPAD1 & BUTTON_Z != 0,
+        *GAMEPAD1 & BUTTON_X != 0,
     );
 
     for (x, wall) in STATE.get_view().iter().enumerate() {
