@@ -11,7 +11,8 @@ run: all
 	w4 run-native target/wasm32-unknown-unknown/release/raycaster.wasm
 
 bundle: all
-	w4 bundle target/wasm32-unknown-unknown/release/raycaster.wasm --title "Raycaster" --html dist/raycaster.html
+	w4 bundle target/wasm32-unknown-unknown/release/raycaster.wasm --title "Raycaster" --html dist/index.html
 
+# Remember to check when https://github.com/tschaub/gh-pages/issues/354 is closed
 deploy: bundle
-	npx gh-pages -d dist
+	npx gh-pages@3.0.0 -d dist
