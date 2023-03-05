@@ -1,4 +1,5 @@
-use core::f32::consts::{FRAC_PI_2, PI, TAU};
+use core::f32::consts::TAU;
+pub use core::f32::consts::{FRAC_PI_2, PI};
 
 const FIVE_PI_SQUARED: f32 = 5.0 * (PI * PI);
 
