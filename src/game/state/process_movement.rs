@@ -92,11 +92,11 @@ impl State {
     }
 
     fn turn_left(&mut self) {
-        self.player_angle -= STEP_SIZE;
+        self.player_angle += STEP_SIZE;
     }
 
     fn turn_right(&mut self) {
-        self.player_angle += STEP_SIZE;
+        self.player_angle -= STEP_SIZE;
     }
 
     fn is_colliding_with_wall(&self) -> bool {
