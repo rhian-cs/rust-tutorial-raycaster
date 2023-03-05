@@ -74,3 +74,13 @@ If your Rust Analyzer extension is annoying you about the panic handler, add the
   "rust-analyzer.checkOnSave.allTargets": false
 }
 ```
+
+## Deployment
+
+To deploy the file, I'm using the [gh-pages](https://github.com/tschaub/gh-pages) utility, which required Node (the `npx` executable in particular) to be installed.
+
+Run:
+
+```sh
+make deploy
+```

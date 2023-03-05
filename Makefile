@@ -12,3 +12,6 @@ run: all
 
 bundle: all
 	w4 bundle target/wasm32-unknown-unknown/release/raycaster.wasm --title "Raycaster" --html dist/raycaster.html
+
+deploy: bundle
+	npx gh-pages -d dist
