@@ -4,7 +4,7 @@ use crate::game::state::State;
 
 use super::memory_map;
 
-pub unsafe fn draw(state: &mut State) {
+pub unsafe fn draw(state: &State) {
     for (x, wall) in state.get_view().iter().enumerate() {
         draw_column(x as i32, wall);
     }

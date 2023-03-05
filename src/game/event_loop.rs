@@ -27,5 +27,5 @@ pub unsafe fn update() {
 
     STATE.update(frame_state);
 
-    engine::draw(&mut STATE);
+    engine::draw(&STATE);
 }
