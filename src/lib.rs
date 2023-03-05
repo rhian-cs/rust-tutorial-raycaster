@@ -99,7 +99,7 @@ impl State {
             self.player_y -= cosf(self.player_angle) * STEP_SIZE;
         }
 
-        if (!self.mouse_left && mouse_left) {
+        if !self.mouse_left && mouse_left {
             self.mouse_x = mouse_x;
         }
 
@@ -153,9 +153,8 @@ impl State {
 
             // Get the minimum of the two distances and
             // "convert" it into a wall height.
-            // *wall = (WALL_HEIGHT / f32::min(h_dist, v_dist)) as i32;
             *wall = (
-                (WALL_HEIGHT / (f32::min(h_dist, v_dist) * cosf(angle - self.player_angle))) as i32,
+                (WALL_HEIGHT / (min_dist * cosf(angle - self.player_angle))) as i32,
                 shadow,
             )
         }
