@@ -1,6 +1,6 @@
 # raycaster
 
-This is my test repository where I followed this great blog post by @grantshady: https://grantshandy.github.io/posts/raycasting/
+This is my test repository where I followed this great blog post by @grantshandy: https://grantshandy.github.io/posts/raycasting/
 
 ## Dependencies
 
