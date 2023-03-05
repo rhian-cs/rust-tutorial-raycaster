@@ -1,3 +1,5 @@
+use super::event_loop::FrameState;
+
 mod get_view;
 mod process_movement;
 
@@ -18,26 +20,7 @@ pub static mut STATE: State = State {
 };
 
 impl State {
-    pub fn update(
-        &mut self,
-        keyboard_up_pressed: bool,
-        keyboard_down_pressed: bool,
-        keyboard_left_pressed: bool,
-        keyboard_right_pressed: bool,
-        keyboard_x_pressed: bool,
-        keyboard_z_pressed: bool,
-        mouse_x: i16,
-        mouse_left_pressed: bool,
-    ) {
-        self.process_movement(
-            keyboard_up_pressed,
-            keyboard_down_pressed,
-            keyboard_left_pressed,
-            keyboard_right_pressed,
-            keyboard_x_pressed,
-            keyboard_z_pressed,
-            mouse_x,
-            mouse_left_pressed,
-        );
+    pub fn update(&mut self, frame_state: FrameState) {
+        self.process_movement(&frame_state);
     }
 }
