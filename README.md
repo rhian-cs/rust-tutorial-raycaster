@@ -6,8 +6,10 @@ This is my test repository where I followed this great blog post by @grantshandy
 
 - Install `make`
 - Install Rust
+- Install [`binaryen`](https://github.com/WebAssembly/binaryen)
+  - For Ubuntu you can install it with `sudo apt install binaryen`
 - Install glibc version 2.31
-  - For ubuntu you can install it with `sudo apt install libc6`
+  - For Ubuntu you can install it with `sudo apt install libc6`
 - Install wasm4 version 2.3.1
   - With ASDF you can run:
   ```sh
@@ -27,6 +29,12 @@ Build and run with:
 
 ```
 make run
+```
+
+Build and check the size of the app with:
+
+```
+make size
 ```
 
 ## VS Code Tweaks
