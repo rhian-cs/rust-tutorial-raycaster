@@ -39,6 +39,12 @@ Build and check the size of the app with:
 make size
 ```
 
+Build and create a browser executable version of the game:
+
+```
+make bundle
+```
+
 ## VS Code Tweaks
 
 If you use VS Code and has the CodeLLDB extension installed, you can configure the workspace to run the app by pressing F5.
