@@ -7,7 +7,7 @@ const HALF_FOV: f32 = FOV * 0.5; // Half the player's field of view.
 const ANGLE_STEP: f32 = FOV / 160.0; // The angle between each ray.
 const WALL_HEIGHT: f32 = 100.0; // A magic number.
 
-impl State {
+impl State<'_> {
     pub fn get_view(&self) -> [(i32, bool); 160] {
         // The player's FOV is split in half by their viewing angle.
         // In order to get the ray's first angle we must

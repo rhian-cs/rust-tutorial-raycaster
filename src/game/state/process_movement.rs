@@ -8,65 +8,40 @@ use crate::{
 const STEP_SIZE: f32 = 0.045;
 const MOUSE_FACTOR: f32 = 0.01;
 
-impl State {
-    pub fn process_movement(
-        &mut self,
-        keyboard_up_pressed: bool,
-        keyboard_down_pressed: bool,
-        keyboard_left_pressed: bool,
-        keyboard_right_pressed: bool,
-        keyboard_x_pressed: bool,
-        keyboard_z_pressed: bool,
-        mouse_x: i16,
-        mouse_left_pressed: bool,
-    ) {
+impl State<'_> {
+    pub fn process_movement(&mut self) {
         let previous_position = (self.player_x, self.player_y);
 
-        self.process_keyboard_movement(
-            keyboard_up_pressed,
-            keyboard_down_pressed,
-            keyboard_left_pressed,
-            keyboard_right_pressed,
-            keyboard_x_pressed,
-            keyboard_z_pressed,
-        );
-        self.process_mouse_movement(mouse_x, mouse_left_pressed);
+        self.process_keyboard_movement();
+        self.process_mouse_movement();
 
         if self.is_colliding_with_wall() {
             (self.player_x, self.player_y) = previous_position;
         }
     }
 
-    fn process_keyboard_movement(
-        &mut self,
-        up_pressed: bool,
-        down_pressed: bool,
-        left_pressed: bool,
-        right_pressed: bool,
-        button_x_pressed: bool,
-        button_z_pressed: bool,
-    ) {
-        if up_pressed {
+    fn process_keyboard_movement(&mut self) {
+        if self.frame_keyboard_up_pressed() {
             self.step_forward();
         }
 
-        if down_pressed {
+        if self.frame_keyboard_down_pressed() {
             self.step_back();
         }
 
-        if right_pressed {
+        if self.frame_keyboard_right_pressed() {
             self.step_right();
         }
 
-        if left_pressed {
+        if self.frame_keyboard_left_pressed() {
             self.step_left();
         }
 
-        if button_z_pressed {
+        if self.frame_keyboard_z_pressed() {
             self.turn_left();
         }
 
-        if button_x_pressed {
+        if self.frame_keyboard_x_pressed() {
             self.turn_right();
         }
     }
@@ -91,19 +66,24 @@ impl State {
         self.player_y -= cosf(self.player_angle) * STEP_SIZE;
     }
 
-    fn process_mouse_movement(&mut self, mouse_x: i16, mouse_left_pressed: bool) {
+    fn process_mouse_movement(&mut self) {
+        let mouse_left_pressed = self.frame_mouse_left_pressed();
+        let mouse_x = self.frame_mouse_x();
+
         if !self.previous_mouse_left_pressed && mouse_left_pressed {
             self.previous_mouse_x = mouse_x;
         }
 
-        if mouse_left_pressed {
-            self.turn_by_mouse_drag(mouse_x);
+        if self.frame_mouse_left_pressed() {
+            self.turn_by_mouse_drag();
         }
 
         self.previous_mouse_left_pressed = mouse_left_pressed;
     }
 
-    fn turn_by_mouse_drag(&mut self, mouse_x: i16) {
+    fn turn_by_mouse_drag(&mut self) {
+        let mouse_x = self.frame_mouse_x();
+
         let mouse_drag: f32 = mouse_x as f32 - self.previous_mouse_x as f32;
         self.previous_mouse_x = mouse_x;
 
