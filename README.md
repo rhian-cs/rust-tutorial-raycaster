@@ -22,14 +22,14 @@ Controls:
 - Install Rust Nightly
 - Install [`binaryen`](https://github.com/WebAssembly/binaryen)
   - For Ubuntu you can install it with `sudo apt install binaryen`
-  - You'll probably need to install `glibc` version 2.31
-    - For Ubuntu you can install it with `sudo apt install libc6`
 - Install wasm4 version 2.3.1
   - With ASDF you can run:
   ```sh
   asdf plugin-add wasm4
   asdf install wasm4 2.3.1
   ```
+  - You'll probably need to install `glibc` version 2.31
+    - For Ubuntu you can install it with `sudo apt install libc6`
 - Enable the wasm architecture for Rust:
   - `rustup target add wasm32-unknown-unknown`
 
