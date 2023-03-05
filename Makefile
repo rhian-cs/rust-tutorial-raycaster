@@ -5,7 +5,7 @@ all:
     -o target/wasm32-unknown-unknown/release/raycaster.wasm
 
 size: all
-	du -bh target/wasm32-unknown-unknown/release/raycaster.wasm
+	du -b target/wasm32-unknown-unknown/release/raycaster.wasm
 
 run: all
 	w4 run-native target/wasm32-unknown-unknown/release/raycaster.wasm
