@@ -2,6 +2,14 @@
 
 This is my test repository where I followed this great blog post by @grantshandy: https://grantshandy.github.io/posts/raycasting/
 
+Check out out live here: https://rhian-cs.github.io/rust-tutorial-raycaster/
+
+Controls:
+
+- Arrow Keys move around
+- Z and X turn left and right
+- By clicking and dragging with your mouse the camera rotates too
+
 ## Dependencies
 
 - Install `make`
