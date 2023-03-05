@@ -16,4 +16,4 @@ strip = true
 panic = "abort"
 
 [dependencies]
-libm = "0.2"
+# libm = "0.2" # Not imported anymore in order to reduce code size

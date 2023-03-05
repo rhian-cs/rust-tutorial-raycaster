@@ -1,8 +1,11 @@
 #![no_std]
+#![feature(core_intrinsics)]
+
+mod math;
 
 use core::f32::consts::{FRAC_PI_2, PI};
 use core::{arch::wasm32, panic::PanicInfo};
-use libm::{ceilf, cosf, fabsf, floorf, sinf, sqrtf, tanf};
+use math::{ceilf, cosf, fabsf, floorf, sinf, sqrtf, tanf};
 
 extern "C" {
     fn vline(x: i32, y: i32, len: u32);

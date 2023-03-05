@@ -5,7 +5,7 @@ This is my test repository where I followed this great blog post by @grantshandy
 ## Dependencies
 
 - Install `make`
-- Install Rust
+- Install Rust Nightly
 - Install [`binaryen`](https://github.com/WebAssembly/binaryen)
   - For Ubuntu you can install it with `sudo apt install binaryen`
 - Install glibc version 2.31
@@ -16,6 +16,8 @@ This is my test repository where I followed this great blog post by @grantshandy
   asdf plugin-add wasm4
   asdf install wasm4 2.3.1
   ```
+- Enable the wasm architecture for Rust:
+  - `rustup target add wasm32-unknown-unknown`
 
 ## Build and Run
 

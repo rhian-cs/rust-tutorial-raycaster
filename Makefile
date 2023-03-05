@@ -1,5 +1,4 @@
 all:
-.SILENT:
 	cargo build --release
 
 	wasm-opt -Oz target/wasm32-unknown-unknown/release/raycaster.wasm \
