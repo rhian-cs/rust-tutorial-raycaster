@@ -95,8 +95,8 @@ impl State {
         }
 
         if left {
-            self.player_x -= sinf(self.player_angle) * STEP_SIZE / 2.0;
-            self.player_y -= cosf(self.player_angle) * STEP_SIZE / 2.0;
+            self.player_x -= sinf(self.player_angle) * STEP_SIZE;
+            self.player_y -= cosf(self.player_angle) * STEP_SIZE;
         }
 
         if (!self.mouse_left && mouse_left) {
