@@ -2,6 +2,7 @@ use super::state::STATE;
 use crate::engine;
 use crate::engine::input;
 
+#[derive(Clone)]
 pub struct FrameState {
     pub keyboard_up_pressed: bool,
     pub keyboard_down_pressed: bool,
@@ -25,7 +26,7 @@ pub unsafe fn update() {
         mouse_left_pressed: input::mouse_left_pressed(),
     };
 
-    STATE.update(&frame_state);
+    STATE.update(frame_state);
 
     engine::draw(&mut STATE);
 }

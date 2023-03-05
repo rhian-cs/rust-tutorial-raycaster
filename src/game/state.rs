@@ -3,13 +3,13 @@ use super::event_loop::FrameState;
 mod get_view;
 mod process_movement;
 
-pub struct State<'a> {
+pub struct State {
     player_x: f32,
     player_y: f32,
     player_angle: f32,
     previous_mouse_x: i16,
     previous_mouse_left_pressed: bool,
-    frame_state: Option<&'a FrameState>,
+    frame_state: Option<FrameState>,
 }
 
 pub static mut STATE: State = State {
@@ -21,34 +21,13 @@ pub static mut STATE: State = State {
     frame_state: None,
 };
 
-impl<'a> State<'a> {
-    pub fn update(&mut self, frame_state: &'a FrameState) {
-        self.frame_state = Some(&frame_state);
+impl State {
+    pub fn update(&mut self, frame_state: FrameState) {
+        self.frame_state = Some(frame_state.clone());
         self.process_movement();
     }
 
-    fn frame_keyboard_up_pressed(&self) -> bool {
-        (*self.frame_state.unwrap()).keyboard_up_pressed
-    }
-    fn frame_keyboard_down_pressed(&self) -> bool {
-        (*self.frame_state.unwrap()).keyboard_down_pressed
-    }
-    fn frame_keyboard_right_pressed(&self) -> bool {
-        (*self.frame_state.unwrap()).keyboard_right_pressed
-    }
-    fn frame_keyboard_left_pressed(&self) -> bool {
-        (*self.frame_state.unwrap()).keyboard_left_pressed
-    }
-    fn frame_keyboard_z_pressed(&self) -> bool {
-        (*self.frame_state.unwrap()).keyboard_z_pressed
-    }
-    fn frame_keyboard_x_pressed(&self) -> bool {
-        (*self.frame_state.unwrap()).keyboard_x_pressed
-    }
-    fn frame_mouse_left_pressed(&self) -> bool {
-        (*self.frame_state.unwrap()).mouse_left_pressed
-    }
-    fn frame_mouse_x(&self) -> i16 {
-        (*self.frame_state.unwrap()).mouse_x
+    fn frame_state(&self) -> &FrameState {
+        self.frame_state.as_ref().unwrap()
     }
 }

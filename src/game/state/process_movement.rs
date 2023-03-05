@@ -6,9 +6,9 @@ use crate::{
 };
 
 const STEP_SIZE: f32 = 0.045;
-const MOUSE_FACTOR: f32 = 0.01;
+const MOUSE_DRAG_FACTOR: f32 = 0.01;
 
-impl State<'_> {
+impl State {
     pub fn process_movement(&mut self) {
         let previous_position = (self.player_x, self.player_y);
 
@@ -21,27 +21,27 @@ impl State<'_> {
     }
 
     fn process_keyboard_movement(&mut self) {
-        if self.frame_keyboard_up_pressed() {
+        if self.frame_state().keyboard_up_pressed {
             self.step_forward();
         }
 
-        if self.frame_keyboard_down_pressed() {
+        if self.frame_state().keyboard_down_pressed {
             self.step_back();
         }
 
-        if self.frame_keyboard_right_pressed() {
+        if self.frame_state().keyboard_right_pressed {
             self.step_right();
         }
 
-        if self.frame_keyboard_left_pressed() {
+        if self.frame_state().keyboard_left_pressed {
             self.step_left();
         }
 
-        if self.frame_keyboard_z_pressed() {
+        if self.frame_state().keyboard_z_pressed {
             self.turn_left();
         }
 
-        if self.frame_keyboard_x_pressed() {
+        if self.frame_state().keyboard_x_pressed {
             self.turn_right();
         }
     }
@@ -67,14 +67,14 @@ impl State<'_> {
     }
 
     fn process_mouse_movement(&mut self) {
-        let mouse_left_pressed = self.frame_mouse_left_pressed();
-        let mouse_x = self.frame_mouse_x();
+        let mouse_left_pressed = self.frame_state().mouse_left_pressed;
+        let mouse_x = self.frame_state().mouse_x;
 
         if !self.previous_mouse_left_pressed && mouse_left_pressed {
             self.previous_mouse_x = mouse_x;
         }
 
-        if self.frame_mouse_left_pressed() {
+        if self.frame_state().mouse_left_pressed {
             self.turn_by_mouse_drag();
         }
 
@@ -82,12 +82,12 @@ impl State<'_> {
     }
 
     fn turn_by_mouse_drag(&mut self) {
-        let mouse_x = self.frame_mouse_x();
+        let mouse_x = self.frame_state().mouse_x;
 
         let mouse_drag: f32 = mouse_x as f32 - self.previous_mouse_x as f32;
         self.previous_mouse_x = mouse_x;
 
-        self.player_angle += (mouse_drag * MOUSE_FACTOR) % (PI * 2.0);
+        self.player_angle += (mouse_drag * MOUSE_DRAG_FACTOR) % (PI * 2.0);
     }
 
     fn turn_left(&mut self) {
