@@ -20,6 +20,8 @@ Controls:
 
 - Install `make`
 - Install Rust Nightly
+  - On the current directory, you can run:
+    - `rustup override set nightly`
 - Install [`binaryen`](https://github.com/WebAssembly/binaryen)
   - For Ubuntu you can install it with `sudo apt install binaryen`
 - Install wasm4 version 2.3.1
