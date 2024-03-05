@@ -2,7 +2,7 @@
 
 This is NOT a 3D game!
 
-This is the repository where I followed this great blog post by @grantshandy: https://grantshandy.github.io/posts/raycasting/. It shows you how to make a game using the same raycasting technology as the first Wolfenstein game.
+This is the repository where I followed this great blog post by @grantshandy: https://grantshandy.github.io/raycasting/. It shows you how to make a game using the same raycasting technology as the first Wolfenstein game.
 
 It's made with Rust and [WASM-4](wasm4.org/), and (as of writing) weighs only 2038 _bytes_!
 
